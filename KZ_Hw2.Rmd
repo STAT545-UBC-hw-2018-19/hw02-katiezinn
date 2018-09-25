@@ -1,0 +1,217 @@
+---
+title: "Hw02_KZ"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Homework 02: Explore Gapminder and use dplyr
+### In this assignemnt I will be exploring Gapminder and using dplyr
+
+First, I will install the gapminder package (**install.packages("gapminder")**) and the tidyverse package (which contains dplyr)(**install.packages("gapminder")**) in my console, then I will load them in my script
+ 
+```{r}
+library(gapminder)
+```
+ 
+```{r}
+library(tidyverse)
+```
+## Checking out the data 
+ 
+```{r}
+?gapminder
+```
+
+When I ask R about Gapminder it tell me that Gapminder is an "excerpt of the Gapminder data on life expectancy, GDP per capita, and population by country"
+
+The first thing I like to do when I open a dataset is get a preview of what it looks like. I accomplish this through the **head** and **summary** functions
+
+```{r}
+head(gapminder)
+summary(gapminder)
+```
+
+What type of an object is this? 
+
+```{r}
+typeof(gapminder)
+```
+
+What is it's class?
+
+```{r}
+class(gapminder)
+```
+
+How many variables/columns?
+
+The **ncol** function tells you how many columns are present while the **nrow** function tells you how many rows are present in your dataset
+
+```{r}
+ncol(gapminder)
+nrow(gapminder)
+```
+
+The **length** function also tells you how many columnds are in the gapminder dataset in our case. Techinically it tells you how many "vectors, or factors (indluing lists)"
+
+```{r}
+length(gapminder)
+```
+
+The **dim** function retrieves the dimensions of an object 
+
+```{r}
+dim(gapminder)
+```
+
+In our case it tells us that the gapminder dataset is 1704 x 6... aka 1704 rows and 6 columns!
+
+What type of data is each variable? We use the **typeof** function for each column
+```{r}
+typeof(gapminder$pop)
+typeof(gapminder$lifeExp)
+typeof(gapminder$continent)
+typeof(gapminder$gdpPercap)
+typeof(gapminder$year)
+typeof(gapminder$country)
+```
+
+A lot of the information we just looked at can actually be found in a simpler way, using the **str** function
+```{r}
+str(gapminder)
+```
+
+## Next we will explore one **categorical** (*continent*) varibale and one **quantitative** (*lifeExp*) variable 
+
+Let's start with the **quantitative** variable. For the quantitative variable we will use the **range** function to see what the range in values are for life expectancy
+
+```{r}
+range(gapminder$lifeExp)
+```
+
+The **min** function finds the minimum value, **max** finds the maximum value All of these values can be efficiently found through one simple command: **summary**. Lastly, the **var** function finds the variance and **sd** funtion finds the standard deviation
+
+```{r}
+min(gapminder$lifeExp)
+max(gapminder$lifeExp)
+summary(gapminder$lifeExp)
+var(gapminder$lifeExp)
+sd(gapminder$lifeExp)
+```
+
+For the **categorical** variable we will do a different analysis, starting with the **levels** function. The levels function shows the values within the variable. In this case it shows the countries within the "country" variable
+
+```{r}
+levels(gapminder$continent)
+```
+The **summary** function shows the frequency of each level.. in this case it shows how many values each continent has
+```{r}
+summary(gapminder$continent)
+```
+
+
+## Exploring various plot types
+
+Next, we will explore some plots. Let's continue with the *continent* and *life expectancy* variables.
+
+If we want to see a simple plot of this *life expectancy* data, we can use the **hist** function
+
+```{r}
+hist(gapminder$lifeExp)
+```
+
+Let's check out a scatterplot of *life expectancy* per *continent*
+
+We will store this in value "a" for convenience
+
+
+```{r}
+a <- ggplot(gapminder, aes(continent, lifeExp)) 
+```
+
+Let's try it in a scatterplot
+
+```{r}
+a + geom_point()
+```
+Box plot?
+
+```{r}
+a + geom_boxplot()
+```
+
+BLUE box plot?
+
+```{r}
+a + geom_boxplot(fill="blue")
+```
+
+Violin plot?
+
+```{r}
+a + geom_violin() +
+  geom_jitter(alpha=0.1)
+```
+
+This graph shows us the amount of countries within each continent
+
+```{r}
+ggplot(gapminder, aes(continent, fill = continent)) +
+  geom_bar()
+```
+
+Wow! Those plots are neat. However, what if we want to focus on more specific variables? I am going narrow down the results by using the **filter** function. The **filter** function picks cases based in their values. We will also use **piping** to carry down the previous command to the next line. 
+
+
+
+
+```{r}
+gapminder %>% 
+  filter(continent == "Asia" | continent == "Africa") %>% 
+    ggplot(aes(continent, lifeExp, fill = continent)) +
+      geom_violin() +
+        geom_jitter(alpha=0.1, aes(colour = continent))
+```
+
+
+To create a "new" data frame with speicifc data I use the **select** function. The **select** function picks variables based on their names
+
+In this example I select the columns *continent, country, lifeExp, year* but I specify that I only want rows from the continent column that include everything except for _Americas_ and _Oceania_ (note the **!** before the filter statement)
+
+```{r}
+gapminder %>% 
+  select(continent, year, lifeExp) %>% 
+    filter(!(continent == "Americas" | continent == "Oceania")) %>% 
+      ggplot(aes(x = continent, y = lifeExp, fill = continent)) +
+        geom_violin() + 
+          geom_jitter(aes(colour = continent), alpha = 0.1)
+```
+
+This graph shows how you can play with graph design, including colour and size. The colour shows which continent the data point is from while the size shows how large the population of the country is. By changing the characteristics of the graph you can show many cool effects 
+
+```{r}
+ggplot(gapminder, aes(lifeExp,gdpPercap, color=continent)) +
+    geom_point(aes(size=pop)) +
+      scale_y_log10()
+```
+
+## But I want to do more!
+
+This does not return a correct result for me. When I look at the gapminder dataset it is clear that there are more than 6 returns each for Rwanda and Afghanistan
+
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
+When I bring the **%in%** function into the code, it spits out a new result with more returns
+```{r}
+filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
+```
+
+
+
+
