@@ -16,14 +16,22 @@ library(gapminder)
 library(tidyverse)
 ```
 
+<<<<<<< HEAD
     ## ── Attaching packages ────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+=======
+    ## ── Attaching packages ──────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+>>>>>>> 7b1199996030a9653bb392eb18823bda2523880b
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
     ## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
     ## ✔ readr   1.1.1     ✔ forcats 0.3.0
 
+<<<<<<< HEAD
     ## ── Conflicts ───────────────────────────────────────────────────────── tidyverse_conflicts() ──
+=======
+    ## ── Conflicts ─────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+>>>>>>> 7b1199996030a9653bb392eb18823bda2523880b
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
