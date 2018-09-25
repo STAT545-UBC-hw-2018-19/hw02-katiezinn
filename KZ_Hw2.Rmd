@@ -1,5 +1,5 @@
 ---
-title: "Hw02_KZ"s
+title: "Hw02_KZ"
 output: github_document
 ---
 
