@@ -57,7 +57,7 @@ ncol(gapminder)
 nrow(gapminder)
 ```
 
-The **length** function also tells you how many columnds are in the gapminder dataset in our case. Techinically it tells you how many "vectors, or factors (indluing lists)"
+The **length** function also tells you how many columns are in the gapminder dataset in our case. Techinically it tells you how many "vectors, or factors (indluing lists)"
 
 ```{r}
 length(gapminder)
@@ -104,12 +104,12 @@ var(gapminder$lifeExp)
 sd(gapminder$lifeExp)
 ```
 
-For the **categorical** variable we will do a different analysis, starting with the **levels** function. The levels function shows the values within the variable. In this case it shows the countries within the "country" variable
+For the **categorical** variable we will do a different analysis, starting with the **levels** function. The levels function shows the values within the variable. In this case it shows the countries within the "continent" variable
 
 ```{r}
 levels(gapminder$continent)
 ```
-The **summary** function shows the frequency of each level.. in this case it shows how many values each continent has
+The **summary** function shows the frequency of each level... in this case it shows how many values each continent has
 ```{r}
 summary(gapminder$continent)
 ```
@@ -139,6 +139,7 @@ Let's try it in a scatterplot
 ```{r}
 a + geom_point()
 ```
+
 Box plot?
 
 ```{r}
@@ -167,8 +168,7 @@ ggplot(gapminder, aes(continent, fill = continent)) +
 
 Wow! Those plots are neat. However, what if we want to focus on more specific variables? I am going narrow down the results by using the **filter** function. The **filter** function picks cases based in their values. We will also use **piping** to carry down the previous command to the next line. 
 
-
-
+Here I filter to show the life expencancy in only Asia and Africa in a violin plot, coloured by continent
 
 ```{r}
 gapminder %>% 
@@ -211,6 +211,7 @@ When I bring the **%in%** function into the code, it spits out a new result with
 ```{r}
 filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
 ```
+
 
 
 

@@ -105,7 +105,7 @@ nrow(gapminder)
 
     ## [1] 1704
 
-The **length** function also tells you how many columnds are in the gapminder dataset in our case. Techinically it tells you how many "vectors, or factors (indluing lists)"
+The **length** function also tells you how many columns are in the gapminder dataset in our case. Techinically it tells you how many "vectors, or factors (indluing lists)"
 
 ``` r
 length(gapminder)
@@ -219,7 +219,7 @@ sd(gapminder$lifeExp)
 
     ## [1] 12.91711
 
-For the **categorical** variable we will do a different analysis, starting with the **levels** function. The levels function shows the values within the variable. In this case it shows the countries within the "country" variable
+For the **categorical** variable we will do a different analysis, starting with the **levels** function. The levels function shows the values within the variable. In this case it shows the countries within the "continent" variable
 
 ``` r
 levels(gapminder$continent)
@@ -227,7 +227,7 @@ levels(gapminder$continent)
 
     ## [1] "Africa"   "Americas" "Asia"     "Europe"   "Oceania"
 
-The **summary** function shows the frequency of each level.. in this case it shows how many values each continent has
+The **summary** function shows the frequency of each level... in this case it shows how many values each continent has
 
 ``` r
 summary(gapminder$continent)
@@ -263,7 +263,9 @@ Let's try it in a scatterplot
 a + geom_point()
 ```
 
-![](KZ_Hw2_files/figure-markdown_github/unnamed-chunk-18-1.png) Box plot?
+![](KZ_Hw2_files/figure-markdown_github/unnamed-chunk-18-1.png)
+
+Box plot?
 
 ``` r
 a + geom_boxplot()
@@ -298,6 +300,8 @@ ggplot(gapminder, aes(continent, fill = continent)) +
 ![](KZ_Hw2_files/figure-markdown_github/unnamed-chunk-22-1.png)
 
 Wow! Those plots are neat. However, what if we want to focus on more specific variables? I am going narrow down the results by using the **filter** function. The **filter** function picks cases based in their values. We will also use **piping** to carry down the previous command to the next line.
+
+Here I filter to show the life expencancy in only Asia and Africa in a violin plot, coloured by continent
 
 ``` r
 gapminder %>% 
