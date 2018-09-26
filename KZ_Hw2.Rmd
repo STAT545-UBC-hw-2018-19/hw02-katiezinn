@@ -136,6 +136,8 @@ a <- ggplot(gapminder, aes(continent, lifeExp))
 
 Let's try it in a scatterplot
 
+How does life expectancy relate to the continent?
+
 ```{r}
 a + geom_point()
 ```
@@ -159,7 +161,7 @@ a + geom_violin() +
   geom_jitter(alpha=0.1)
 ```
 
-This graph shows us the amount of countries within each continent
+How many countries are within each continent?
 
 ```{r}
 ggplot(gapminder, aes(continent, fill = continent)) +
@@ -167,6 +169,8 @@ ggplot(gapminder, aes(continent, fill = continent)) +
 ```
 
 Wow! Those plots are neat. However, what if we want to focus on more specific variables? I am going narrow down the results by using the **filter** function. The **filter** function picks cases based in their values. We will also use **piping** to carry down the previous command to the next line. 
+
+What are the life expectancies in only Asia and Africa?
 
 Here I filter to show the life expencancy in only Asia and Africa in a violin plot, coloured by continent
 
@@ -178,6 +182,7 @@ gapminder %>%
         geom_jitter(alpha=0.1, aes(colour = continent))
 ```
 
+What are the life expectancies in all continents except for the Americas and Oceania?
 
 To create a "new" data frame with speicifc data I use the **select** function. The **select** function picks variables based on their names
 
@@ -193,6 +198,8 @@ gapminder %>%
 ```
 
 This graph shows how you can play with graph design, including colour and size. The colour shows which continent the data point is from while the size shows how large the population of the country is. By changing the characteristics of the graph you can show many cool effects 
+
+How are life expectancy and gdp per cap related and how does this differ by population and continent?
 
 ```{r}
 ggplot(gapminder, aes(lifeExp,gdpPercap, color=continent)) +
